@@ -5,7 +5,7 @@ const k = kaboom({
     height: 720,
     letterbox: true,
     global: false,
-    debug: true
+    debug: true,
 });
 
 export default k;
