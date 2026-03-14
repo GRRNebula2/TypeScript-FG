@@ -1,6 +1,6 @@
 import type { KaboomCtx } from "kaboom";
 import k from "./kaboomCtx";
-import { fetchMapData } from "./utils";
+import { drawTile, fetchMapData } from "./utils";
 
 k.loadSprite(
     "background-layer-1",
@@ -26,6 +26,10 @@ k.loadSprite("shop", "./assets/shop_anim.png", {
 
 k.loadSprite("fence-1", "./assets/fence_1.png");
 
+k.loadSprite("tileset", "./assets/oak_woods_tileset.png", {
+    sliceX: 31,
+    sliceY: 22,
+});
 
 async function arena(k: KaboomCtx) {
     k.add([k.sprite("background-layer-1"), k.pos(0, 0), k.scale(4), k.fixed()]);
@@ -56,7 +60,7 @@ async function arena(k: KaboomCtx) {
                     case "fence-1":
                         map.add([
                             k.sprite("fence-1"),
-                            k.pos(object.x, object.y + 6),
+                            k.pos(object.x, object.y + 9),
                             k.area(),
                             k.anchor("center"),
                         ]);
@@ -64,7 +68,11 @@ async function arena(k: KaboomCtx) {
                     default:
                 }
             }
+            continue;
+        }
 
+        if (layer.type === "tilelayer") {
+            drawTile(k, map, layer, tilewidth, tileheight);
         }
     }
 
