@@ -1,6 +1,9 @@
 import type { KaboomCtx } from "kaboom";
 import k from "./kaboomCtx";
 import { drawTile, fetchMapData } from "./utils";
+import { makeSamurai } from "./entities/samurai";
+import type { Entity } from "./types";
+import { makeNinja } from "./entities/ninja";
 
 k.loadSprite(
     "background-layer-1",
@@ -31,7 +34,88 @@ k.loadSprite("tileset", "./assets/oak_woods_tileset.png", {
     sliceY: 22,
 });
 
+
+k.loadSprite("samurai", "./assets/entities/samurai.png", {
+    sliceX: 8,
+    sliceY: 9,
+    anims: {
+        idle: {
+            from: 32,
+            to: 39,
+            loop: true,
+        },
+        run: {
+            from: 48,
+            to: 55,
+            loop: true,
+        },
+        attack: {
+            from: 0,
+            to: 5,
+            speed: 16,
+        },
+        death: {
+            from: 16,
+            to: 21,
+        },
+        hit: {
+            from: 56,
+            to: 59,
+        },
+        jump: {
+            from: 40,
+            to: 41,
+            loop: true,
+        },
+        fall: {
+            from: 24,
+            to: 25,
+            loop: true,
+        },
+    },
+});
+
+k.loadSprite("ninja", "./assets/entities/ninja.png", {
+    sliceX: 8,
+    sliceY: 8,
+    anims: {
+        idle: {
+            from: 32,
+            to: 35,
+            loop: true,
+        },
+        run: {
+            from: 48,
+            to: 55,
+            loop: true,
+        },
+        attack: {
+            from: 0,
+            to: 3,
+        },
+        death: {
+            from: 16,
+            to: 22,
+        },
+        hit: {
+            from: 56,
+            to: 58,
+        },
+        jump: {
+            from: 40,
+            to: 41,
+            loop: true,
+        },
+        fall: {
+            from: 24,
+            to: 25,
+            loop: true,
+        },
+    },
+});
+
 async function arena(k: KaboomCtx) {
+    k.setGravity(2000);
     k.add([k.sprite("background-layer-1"), k.pos(0, 0), k.scale(4), k.fixed()]);
     k.add([k.sprite("background-layer-2"), k.pos(0, 0), k.scale(4), k.fixed()]);
 
@@ -40,6 +124,11 @@ async function arena(k: KaboomCtx) {
     );
 
     const map = k.add([k.pos(0, 0)]);
+
+    const entities: { [key: string]: Entity | null } = {
+        player1: null,
+        player2: null,
+    };
 
     for (const layer of layers) {
         if (
@@ -82,7 +171,27 @@ async function arena(k: KaboomCtx) {
         }
 
         if (layer.name === "SpawnPoints" && layer.type === "objectgroup") {
-            //todo
+            for (const object of layer.objects) {
+                switch (object.name) {
+                    case "player-1":
+                        entities.player1 = makeSamurai(
+                            k,
+                            map,
+                            k.vec2(object.x, object.y),
+                        );
+                        break;
+                    case "player-2":
+                        entities.player2 = makeNinja(
+                            k,
+                            map,
+                            k.vec2(object.x, object.y),
+                        );
+
+                        break;
+                    default:
+                }
+            }
+            continue;
         }
 
         if (layer.type === "tilelayer") {
