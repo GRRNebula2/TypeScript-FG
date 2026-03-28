@@ -10,7 +10,7 @@ export function makeNinja(
         k.sprite("ninja", { anim: "idle" }),
         k.pos(pos),
         k.area({
-            shape: new k.Rect(k.vec2(0), 20, 40),
+            shape: new k.Rect(k.vec2(0, 6), 20, 40),
             collisionIgnore: ["samurai"]
         }),
         k.anchor("center"),
