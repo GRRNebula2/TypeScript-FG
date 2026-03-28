@@ -41,8 +41,7 @@ async function arena(k: KaboomCtx) {
 
     const map = k.add([k.pos(0, 0)]);
 
-    let layer;
-    for (layer of layers) {
+    for (const layer of layers) {
         if (
             layer.name === "DecorationSpawnPoints" &&
             layer.type === "objectgroup"
@@ -69,6 +68,21 @@ async function arena(k: KaboomCtx) {
                 }
             }
             continue;
+        }
+
+        if (layer.name === "Boundaries" && layer.type === "objectgroup") {
+            for (const object of layer.objects) {
+                map.add([
+                    k.area({ shape: new k.Rect(k.vec2(0), object.width, object.height) }),
+                    k.pos(object.x, object.y + tileheight),
+                    k.body({ isStatic: true }),
+                ])
+            }
+            continue;
+        }
+
+        if (layer.name === "SpawnPoints" && layer.type === "objectgroup") {
+            //todo
         }
 
         if (layer.type === "tilelayer") {
