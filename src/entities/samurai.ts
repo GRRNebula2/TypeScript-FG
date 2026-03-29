@@ -1,4 +1,5 @@
 import type { GameObj, KaboomCtx, Vec2 } from "kaboom";
+import { fighterProps, setFighterControls } from "./fighter";
 
 
 export function makeSamurai(
@@ -15,18 +16,23 @@ export function makeSamurai(
         }),
         k.anchor("center"),
         k.body(),
-        k.health(10),
+        k.health(fighterProps.maxHp),
         k.opacity(),
         "samurai",
         {
-
+            ...fighterProps,
         },
     ]);
 
     return {
         gameObj,
         setControls: () => {
-            //todo
+            setFighterControls(k, gameObj, {
+                LEFT: "a",
+                RIGHT: "d",
+                UP: "w",
+                DOWN: "s",
+            });
         },
     }
 }

@@ -202,6 +202,9 @@ async function arena(k: KaboomCtx) {
     k.camPos(k.center().x - 450, k.center().y - 160);
     k.camScale(4, 4);
 
+    entities.player1?.setControls();
+    entities.player2?.setControls();
+
 }
 
 k.scene("arena", () => arena(k));

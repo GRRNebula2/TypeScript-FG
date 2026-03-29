@@ -1,3 +1,4 @@
+import type { GameObj } from "kaboom";
 
 type TiledBaseLayer = {
     id: number;
@@ -36,4 +37,15 @@ export type TiledObject = {
     width: number;
     x: number;
     y: number;
+}
+
+export type Entity = {
+    gameObj: GameObj;
+    setControls: () => void;
+
+}
+
+export enum Directions {
+    LEFT = "LEFT",
+    RIGHT = "RIGHT",
 }

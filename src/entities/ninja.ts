@@ -1,4 +1,5 @@
 import type { GameObj, KaboomCtx, Vec2 } from "kaboom";
+import { fighterProps, setFighterControls } from "./fighter";
 
 
 export function makeNinja(
@@ -15,18 +16,23 @@ export function makeNinja(
         }),
         k.anchor("center"),
         k.body(),
-        k.health(10),
+        k.health(fighterProps.maxHp),
         k.opacity(),
         "ninja",
         {
-
+            ...fighterProps,
         },
     ]);
 
     return {
         gameObj,
         setControls: () => {
-            //todo
+            setFighterControls(k, gameObj, {
+                LEFT: "left",
+                RIGHT: "right",
+                UP: "up",
+                DOWN: "down",
+            });
         },
     }
 }
