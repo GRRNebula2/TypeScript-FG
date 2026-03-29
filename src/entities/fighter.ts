@@ -74,7 +74,7 @@ export function setFighterControls(
             const updateHitboxPos = () => {
                 const hitboxPos: { [key: string]: Vec2 } = {
                     LEFT: k.vec2(fighter.pos.x - 50, fighter.pos.y),
-                    RIGHT: k.vec2(fighter.pos.x + 50, fighter.pos.y)
+                    RIGHT: k.vec2(fighter.pos.x + 50, fighter.pos.y),
                 };
 
                 return hitboxPos[fighter.direction];
@@ -92,7 +92,7 @@ export function setFighterControls(
             });
 
 
-            const enemyTag = fighter.is("samura") ? "ninja" : "samurai";
+            const enemyTag = fighter.is("samurai") ? "ninja" : "samurai";
 
             attackHitbox.onCollide(enemyTag, (enemy) => {
                 k.wait(0.1, () => (enemy.previousHp = enemy.hp()));
