@@ -9,8 +9,26 @@ export const fighterProps = {
     isCooldownActive: false,
     maxHp: 10,
     previousHp: 10,
-
 }
+
+export async function makeFighterBlink(k: KaboomCtx, fighter: GameObj) {
+    await k.tween(
+        fighter.opacity,
+        0,
+        0.05,
+        (newOpacity) => (fighter.opacity = newOpacity),
+        k.easings.linear
+    );
+
+    k.tween(
+        fighter.opacity,
+        1,
+        0.05,
+        (newOpacity) => (fighter.opacity = newOpacity),
+        k.easings.linear
+    );
+}
+
 
 export function setFighterControls(
     k: KaboomCtx,
@@ -97,6 +115,7 @@ export function setFighterControls(
             attackHitbox.onCollide(enemyTag, (enemy) => {
                 k.wait(0.1, () => (enemy.previousHp = enemy.hp()));
                 if (enemy.hp() !== 0) enemy.hurt(1);
+                return;
             });
 
             if (fighter.curAnim !== "attack") fighter.play("attack");
@@ -110,6 +129,7 @@ export function setFighterControls(
     });
 
     fighter.on("hurt", () => {
+        makeFighterBlink(k, fighter);
         if (fighter.hp() > 0 && fighter.curAnim !== "hit") {
             fighter.play("hit")
             return;
