@@ -4,7 +4,6 @@ import { Directions } from "../types";
 
 export const fighterProps = {
     speed: 200,
-    direction: null,
     isDead: false,
     isCooldownActive: false,
     maxHp: 10,

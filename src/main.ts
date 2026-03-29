@@ -2,8 +2,9 @@ import type { KaboomCtx } from "kaboom";
 import k from "./kaboomCtx";
 import { drawTile, fetchMapData } from "./utils";
 import { makeSamurai } from "./entities/samurai";
-import type { Entity } from "./types";
+import { Directions, type Entity } from "./types";
 import { makeNinja } from "./entities/ninja";
+import { makeHealthBar } from "./ui/healthbar";
 
 k.loadSprite(
     "background-layer-1",
@@ -204,6 +205,11 @@ async function arena(k: KaboomCtx) {
 
     entities.player1?.setControls();
     entities.player2?.setControls();
+
+    if (entities.player1?.gameObj)
+        makeHealthBar(k, Directions.LEFT, entities.player1.gameObj);
+    if (entities.player2?.gameObj)
+        makeHealthBar(k, Directions.RIGHT, entities.player2.gameObj);
 
 }
 
