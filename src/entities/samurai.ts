@@ -1,5 +1,6 @@
 import type { GameObj, KaboomCtx, Vec2 } from "kaboom";
 import { fighterProps, setFighterControls } from "./fighter";
+import { Directions } from "../types";
 
 
 export function makeSamurai(
@@ -21,6 +22,7 @@ export function makeSamurai(
         "samurai",
         {
             ...fighterProps,
+            direction: Directions.RIGHT
         },
     ]);
 
