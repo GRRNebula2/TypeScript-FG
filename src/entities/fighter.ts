@@ -86,7 +86,7 @@ export function setFighterControls(
 
         if (key === keys.DOWN && !fighter.isCooldownActive) {
             fighter.isCooldownActive = true;
-            k.wait(0.5, () => (fighter.isCooldownActive = false));
+            k.wait(0.6, () => (fighter.isCooldownActive = false));
 
             const updateHitboxPos = () => {
                 const hitboxPos: { [key: string]: Vec2 } = {
